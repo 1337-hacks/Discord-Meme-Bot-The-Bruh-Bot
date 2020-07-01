@@ -116,10 +116,8 @@ client.on("message", (message) =>
     case "fbi" :
     {
       let mentionedMember = message.mentions.members.first();
-      const getMention = require("discord-mentions");
-      var botMention = getMention("<@!727701440344096799>", message.guild).member;
-
-      if(mentionedMember.content === botMention.member)
+      
+      if(message.content.toLowerCase().includes(client.user.id))
       {
         message.channel.send("You cannot call the FBI on me, " + message.author.toString() + ".");
         message.channel.send("*pulls out reverse uno card*");
