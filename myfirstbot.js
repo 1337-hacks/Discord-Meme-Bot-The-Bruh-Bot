@@ -25,13 +25,15 @@ let prefix = config.prefix;
 var loop;
 let listOfCommands =  //INSERT BOT COMMANDS DESCRIPTION HERE FOR THE !help COMMAND
                     [
-                      "!greet - greet yourself",
-                      "!poohdance - show pooh dancing!",
-                      "!animedance - anime dance!",
-                      "!isabelledance - see Isabelle from Animal Crossing dance!",
-                      "!insertbruhmoment - insert a random bruh moment",
-                      "!bruhmeter @[insert a username here] - check the bruh percentage of a fellow member",
-                      "!help - display a list of commands like you've just done!"
+                      "*greet - greet yourself",
+                      "*poohdance - show pooh dancing!",
+                      "*animedance - anime dance!",
+                      "*isabelledance - see Isabelle from Animal Crossing dance!",
+                      "*insertbruhmoment - insert a random bruh moment",
+                      "*bruhmeter @[insert a username here] - check the bruh percentage of a fellow member",
+                      "*fbi @[insert a username here] - call the FBI on a fellow member",
+                      "*help - display a list of commands like you've just done!",
+                      "\n Also, I will find *anything* that contains the word **bruh** to suppport your cause"
                     ];
 
 
@@ -60,7 +62,7 @@ client.on("message", (message) =>
   }
 
   //Bruh Moment Command
-  else if(message.content.startsWith(config.prefix + "insertbruhmoment") || message.content.toLowerCase().includes("bruh"))
+  else if(message.content.startsWith(config.prefix + "insertbruhmoment") || message.content.toLowerCase().includes("bruh") || message.content.toLowerCase().includes("b r u h"))
   {
     let randomNum = Math.floor((Math.random() * bruhGifs.length) + 0);
 
@@ -78,7 +80,14 @@ client.on("message", (message) =>
   {
     case "greet" :    // Greet Command
     {
-      message.reply("Hello there!");
+      function secondGreeting()
+      {
+        message.reply("Sorry I can't reply to you properly, I am merely a bot... I'm sure you're doing fine though!");
+      }
+
+      message.reply("Hello there! How are you today?");
+
+      setTimeout(secondGreeting, 7000);
       break;
     }
     case "poohdance" :    // Pooh Dance Command
@@ -102,6 +111,25 @@ client.on("message", (message) =>
       let randomNum = Math.floor((Math.random() * 100) + 0);
 
       message.channel.send(mentionedMember.toString() + "'s bruh meter is currently at: " + randomNum + "%");
+      break;
+    }
+    case "fbi" :
+    {
+      let mentionedMember = message.mentions.members.first();
+      const getMention = require("discord-mentions");
+      var botMention = getMention("<@!727701440344096799>", message.guild).member;
+
+      if(mentionedMember.content === botMention.member)
+      {
+        message.channel.send("You cannot call the FBI on me, " + message.author.toString() + ".");
+        message.channel.send("*pulls out reverse uno card*");
+        message.channel.send("Hello " + message.author.toString() + ", " + mentionedMember.toString() + " has just" + "*** called the FBI on you***", {files: [fbiGif]});
+      }
+      else
+      {
+        message.channel.send("Hello " + mentionedMember.toString() + ", " + message.author.toString() + " has just" + "*** called the FBI on you***", {files: [fbiGif]});
+      }
+
       break;
     }
     case "help" :   // Help Command, shows the list of commands as written under listOfCommands
